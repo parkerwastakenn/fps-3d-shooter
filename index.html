@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D FPS Shooter</title>
+    <title>3D Car Game</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         body {
             font-family: Arial, sans-serif;
             overflow: hidden;
-            background-color: #000;
+            background-color: #1a1a1a;
         }
         #canvas {
             display: block;
@@ -27,61 +27,100 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            font-color: white;
         }
-        #crosshair {
+        #speedometer {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 30px;
-            height: 30px;
-            border: 2px solid rgba(0, 255, 0, 0.7);
-            border-radius: 50%;
+            bottom: 40px;
+            left: 40px;
+            color: #00ff00;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border: 2px solid #00ff00;
+            font-family: monospace;
+            min-width: 200px;
         }
-        #ammo {
+        #rpm {
             position: absolute;
-            bottom: 30px;
-            right: 30px;
-            color: white;
-            font-size: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border: 1px solid rgba(0, 255, 0, 0.5);
+            bottom: 40px;
+            right: 40px;
+            color: #ff6600;
+            font-size: 18px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border: 2px solid #ff6600;
+            font-family: monospace;
+            min-width: 200px;
         }
-        #health {
+        #gear {
             position: absolute;
-            bottom: 30px;
-            left: 30px;
-            color: white;
-            font-size: 20px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px;
-            border: 1px solid rgba(255, 0, 0, 0.5);
-        }
-        #score {
-            position: absolute;
-            top: 30px;
+            top: 40px;
             left: 50%;
             transform: translateX(-50%);
-            color: white;
-            font-size: 24px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 15px 25px;
-            border: 1px solid rgba(0, 255, 0, 0.5);
+            color: #ffff00;
+            font-size: 36px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px 30px;
+            border: 2px solid #ffff00;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        #controls {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            color: #aaaaaa;
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border: 1px solid #aaaaaa;
+            font-family: monospace;
+            line-height: 1.6;
+        }
+        #info {
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            color: #00ffff;
+            font-size: 14px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border: 1px solid #00ffff;
+            font-family: monospace;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
     <div id="hud">
-        <div id="crosshair"></div>
-        <div id="health">Health: <span id="healthValue">100</span></div>
-        <div id="ammo">Ammo: <span id="ammoValue">30</span>/<span id="ammoMax">90</span></div>
-        <div id="score">Score: <span id="scoreValue">0</span></div>
+        <div id="controls">
+            <div>W/↑ - Forward</div>
+            <div>S/↓ - Backward</div>
+            <div>A/← - Left</div>
+            <div>D/→ - Right</div>
+            <div>SPACE - Handbrake</div>
+            <div>R - Reset Position</div>
+        </div>
+        <div id="gear">N</div>
+        <div id="info">
+            <div>Position: <span id="posX">0</span>, <span id="posY">0</span>, <span id="posZ">0</span></div>
+        </div>
+        <div id="speedometer">
+            <div>Speed: <span id="speedValue">0</span> km/h</div>
+            <div style="margin-top: 10px; height: 20px; background: rgba(0,255,0,0.2); border: 1px solid #00ff00; border-radius: 3px; overflow: hidden;">
+                <div id="speedBar" style="height: 100%; width: 0%; background: #00ff00; transition: width 0.1s;"></div>
+            </div>
+        </div>
+        <div id="rpm">
+            <div>RPM: <span id="rpmValue">0</span></div>
+            <div style="margin-top: 10px; height: 20px; background: rgba(255,102,0,0.2); border: 1px solid #ff6600; border-radius: 3px; overflow: hidden;">
+                <div id="rpmBar" style="height: 100%; width: 0%; background: #ff6600; transition: width 0.1s;"></div>
+            </div>
+        </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"></script>
-    <script src="game.js"></script>
+    <script src="car-game.js"></script>
 </body>
 </html>
